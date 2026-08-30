@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material 3 Expressive List Studio - M3 Settings Style</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;600;700&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <style>
+        :root {
+            --md-sys-color-bg: #09090b;
+            --md-sys-color-surface: #121215;
+            --md-sys-color-surface-container: #1c1c21;
+            --md-sys-color-surface-high: #27272a;
+            --md-sys-color-on-surface: #f4f4f5;
+            --md-sys-color-on-surface-variant: #a1a1aa;
+            --md-sys-color-outline: #3f3f46;
+            --md-sys-color-outline-variant: #27272a;
+            --md-sys-color-accent: #ffffff;
+            --md-sys-color-on-accent: #09090b;
+
+            --dynamic-font-family: 'Inter', sans-serif;
+            --dynamic-title-size: 26px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--md-sys-color-bg);
+            color: var(--md-sys-color-on-surface);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: var(--md-sys-color-surface);
+            border-bottom: 1px solid var(--md-sys-color-outline-variant);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 10;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .app-layout {
+            display: grid;
+            grid-template-columns: 460px 1fr;
+            flex: 1;
+            width: 100%;
+            height: calc(100vh - 73px);
+        }
+
+        @media (max-width: 1100px) {
+            .app-layout { grid-template-columns: 1fr; height: auto; }
+        }
+
+        .editor-panel {
+            background-color: var(--md-sys-color-bg);
+            border-right: 1px solid var(--md-sys-color-outline-variant);
+            overflow-y: auto;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .m3-card {
+            background-color: var(--md-sys-color-surface);
+            border: 1px solid var(--md-sys-color-outline-variant);
+            border-radius: 28px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--md-sys-color-outline-variant);
+            padding-bottom: 0.75rem;
+        }
+
+        .card-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+        .form-group label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--md-sys-color-on-surface-variant);
+        }
+
+        .form-row { display: flex; gap: 0.75rem; }
+        .form-row > * { flex: 1; }
+
+        input[type="text"], input[type="url"], input[type="number"], select {
+            background-color: var(--md-sys-color-surface-container);
+            color: var(--md-sys-color-on-surface);
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: 12px;
+            padding: 0.6rem 0.85rem;
+            font-size: 0.88rem;
+            outline: none;
+            width: 100%;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--md-sys-color-on-surface);
+            background-color: var(--md-sys-color-surface-high);
+        }
+
+        .column-config-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            background: var(--md-sys-color-surface-container);
+            padding: 0.85rem;
+            border-radius: 18px;
+            border: 1px solid var(--md-sys-color-outline-variant);
+        }
+
+        .column-config-row { display: flex; align-items: center; gap: 0.75rem; }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.88rem;
+            font-weight: 600;
+            padding: 0.65rem 1.25rem;
+            border-radius: 9999px;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+        }
+
+        .btn-sm { padding: 0.4rem 0.85rem; font-size: 0.78rem; }
+        .btn-primary { background-color: var(--md-sys-color-accent); color: var(--md-sys-color-on-accent); }
+        .btn-secondary { background-color: var(--md-sys-color-surface-container); color: var(--md-sys-color-on-surface); border: 1px solid var(--md-sys-color-outline); }
+        .btn-icon { padding: 0.4rem; border-radius: 9999px; background: transparent; color: var(--md-sys-color-on-surface-variant); border: none; cursor: pointer; }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .editor-table-wrapper {
+            max-height: 420px;
+            overflow-y: auto;
+            border: 1px solid var(--md-sys-color-outline-variant);
+            border-radius: 18px;
+            background: var(--md-sys-color-surface-container);
+            padding: 0.5rem;
+        }
+
+        .editor-row {
+            background: var(--md-sys-color-surface);
+            border: 1px solid var(--md-sys-color-outline-variant);
+            border-radius: 12px;
+            padding: 0.85rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+        }
+        
+        .editor-row-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--md-sys-color-on-surface-variant);
+            border-bottom: 1px dashed var(--md-sys-color-outline-variant);
+            padding-bottom: 0.3rem;
+        }
+
+        .qr-toggle-section {
+            background: var(--md-sys-color-surface-container);
+            border-radius: 6px;
+            padding: 0.65rem;
+            border: 1px solid var(--md-sys-color-outline);
+        }
+
+        /* VORSCHAU-BEREICH */
+        .preview-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #050507;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            padding: 3rem;
+        }
+
+        .preview-sheet {
+            background-color: #ffffff;
+            color: #000000;
+            width: 210mm;
+            height: 297mm;
+            padding: 15mm 15mm 10mm 15mm;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+            font-family: var(--dynamic-font-family);
+            flex-shrink: 0;
+        }
+
+        .sheet-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2px solid #e4e4e7;
+            padding-bottom: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .sheet-title {
+            font-size: var(--dynamic-title-size);
+            font-weight: 700;
+            color: #000000;
+            line-height: 1.2;
+            word-break: break-word;
+        }
+
+        .sheet-subtitle { font-size: 0.9rem; color: #52525b; margin-top: 0.3rem; }
+
+        /* Container passt sich jetzt dem Inhalt an und schrumpft nach links */
+        .sheet-table-container {
+            background-color: #f4f4f5;
+            border: 1px solid #d4d4d8;
+            border-radius: 20px;
+            padding: 12px;
+            margin-bottom: auto;
+            display: inline-block;
+            width: auto;
+            max-width: 100%;
+        }
+
+        .sheet-table { 
+            width: auto; 
+            border-collapse: separate; 
+            border-spacing: 0; 
+            table-layout: auto; 
+        }
+        
+        .sheet-table th {
+            background-color: #27272a;
+            color: #ffffff;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 0.75rem 1.25rem;
+            border: none;
+            text-align: left;
+            white-space: nowrap;
+        }
+        .sheet-table th:first-child { border-top-left-radius: 12px; border-bottom-left-radius: 12px; }
+        .sheet-table th:last-child { border-top-right-radius: 12px; border-bottom-right-radius: 12px; }
+
+        .sheet-table td {
+            padding: 0.85rem 1.25rem;
+            font-size: 0.9rem;
+            color: #09090b;
+            background-color: #ffffff;
+            border-bottom: 1px solid #e4e4e7;
+            vertical-align: top; 
+            word-break: break-all;
+            overflow-wrap: break-word;
+            height: auto; 
+        }
+
+        .sheet-table tbody tr:first-child td:first-child { border-top-left-radius: 12px; }
+        .sheet-table tbody tr:first-child td:last-child { border-top-right-radius: 12px; }
+
+        .sheet-table tbody tr:last-child td { border-bottom: none; }
+        .sheet-table tbody tr:last-child td:first-child { border-bottom-left-radius: 12px; }
+        .sheet-table tbody tr:last-child td:last-child { border-bottom-right-radius: 12px; }
+
+        .qr-cell-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+        .qr-canvas-holder { 
+            background: #ffffff; 
+            padding: 2px; 
+            border-radius: 4px; 
+            display: inline-block; 
+            line-height: 0; 
+        }
+
+        .sheet-footer {
+            margin-top: auto; 
+            padding-bottom: 0mm; 
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: #71717a;
+            border-top: none; 
+        }
+
+        .footer-left {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .sheet-doc-id { font-family: 'Roboto Mono', monospace; font-size: 0.8rem; font-weight: 600; color: #52525b; }
+        .watermark-brand { display: flex; align-items: center; gap: 0.4rem; font-weight: 600; color: #52525b; }
+        .page-info { font-family: 'Roboto Mono', monospace; font-weight: 600; color: #52525b; }
+
+        @page {
+            size: A4 portrait;
+            margin: 0;
+        }
+
+        @media print {
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            html, body {
+                background: #ffffff !important;
+                width: 210mm !important;
+                height: 297mm !important;
+                overflow: hidden !important;
+            }
+            header, .editor-panel, .btn { display: none !important; }
+            .app-layout { display: block !important; height: auto !important; }
+            .preview-container {
+                background: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                display: block !important;
+                overflow: visible !important;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+            .preview-sheet {
+                background-color: #ffffff !important;
+                box-shadow: none !important;
+                width: 210mm !important;
+                height: 297mm !important;
+                padding: 15mm 15mm 10mm 15mm !important;
+                margin: 0 !important;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand-logo">
+            <span class="material-symbols-outlined">style</span>
+            <span>List Studio M3</span>
+        </div>
+        <div style="display: flex; gap: 0.75rem;">
+            <button class="btn btn-secondary" onclick="window.print()">
+                <span class="material-symbols-outlined">print</span> Drucken
+            </button>
+            <button class="btn btn-primary" onclick="exportToPDF()">
+                <span class="material-symbols-outlined">picture_as_pdf</span> PDF Exportieren
+            </button>
+        </div>
+    </header>
+
+    <main class="app-layout">
+        <section class="editor-panel">
+            <div class="m3-card">
+                <div class="card-header">
+                    <span class="card-title"><span class="material-symbols-outlined">view_column</span> Spalten & Layout</span>
+                    <button class="btn btn-secondary btn-sm" onclick="addNewColumn()"><span class="material-symbols-outlined">add</span> Spalte</button>
+                </div>
+                <div class="column-config-grid" id="columnConfigContainer"></div>
+                <div class="form-row" style="margin-top: 0.25rem;">
+                    <div class="form-group">
+                        <label>Dokument-ID</label>
+                        <input type="text" id="docIdInput" value="LAB-K-2026-REV3" oninput="updateMeta()">
+                    </div>
+                    <div class="form-group">
+                        <label>Wasserzeichen</label>
+                        <input type="text" id="watermarkInput" value="cr4xx0" oninput="updateMeta()">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Seiten-Text (Unten Rechts)</label>
+                    <input type="text" id="pageTextInput" value="SEITE 1 VON 1" oninput="updateMeta()">
+                </div>
+                <div class="form-group">
+                    <label>Haupt-Überschrift</label>
+                    <input type="text" id="listTitleInput" value="Schuljahr 8 – Mathematik & Lernmaterialien" oninput="updateMeta()">
+                </div>
+                <div class="form-group">
+                    <label>Unter-Überschrift</label>
+                    <input type="text" id="listSubtitleInput" value="Übersicht & Buchbestellungen" oninput="updateMeta()">
+                </div>
+            </div>
+
+            <div class="m3-card" style="margin-top: 1.25rem;">
+                <div class="card-header">
+                    <span class="card-title"><span class="material-symbols-outlined">table_chart</span> Zeilen & Inhalte</span>
+                    <button class="btn btn-secondary btn-sm" onclick="addNewRow()"><span class="material-symbols-outlined">add</span> Zeile</button>
+                </div>
+                <div class="editor-table-wrapper" id="editorRowsContainer"></div>
+            </div>
+        </section>
+
+        <section class="preview-container">
+            <div class="preview-sheet" id="previewSheet">
+                <div>
+                    <div class="sheet-top-bar">
+                        <div class="sheet-titles">
+                            <div class="sheet-title" id="previewTitle">Titel</div>
+                            <div class="sheet-subtitle" id="previewSubtitle">Untertitel</div>
+                        </div>
+                    </div>
+                    <div class="sheet-table-container">
+                        <table class="sheet-table">
+                            <thead><tr id="previewTableHeader"></tr></thead>
+                            <tbody id="previewTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="sheet-footer">
+                    <div class="footer-left">
+                        <div class="sheet-doc-id">ID: <span id="previewDocId"></span></div>
+                        <div class="watermark-brand">
+                            <span class="material-symbols-outlined" style="font-size: 1rem;">verified</span>
+                            <span id="previewWatermark">cr4xx0</span>
+                        </div>
+                    </div>
+                    <div class="page-info" id="previewPageText">SEITE 1 VON 1</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        let columnsConfig = [
+            { id: "col_0", active: true, name: "Thema / Gegenstand" },
+            { id: "col_1", active: true, name: "Details / Infos" },
+            { id: "col_2", active: true, name: "Link / Quelle" }
+        ];
+        let qrColumnConfig = { active: true, name: "QR Code" };
+        let rowsData = [
+            { "col_0": "Multiplikation & Division", "col_1": "S. 41 Lehrbuch", "col_2": "-", "_showQR": false, "_qrData": "" },
+            { "col_0": "Taschenrechner", "col_1": "Klasse 8", "col_2": "https://amazon.de/...", "_showQR": true, "_qrData": "https://amazon.de/..." }
+        ];
+
+        function updateMeta() {
+            document.getElementById('previewTitle').innerText = document.getElementById('listTitleInput').value || 'Unbenannt';
+            document.getElementById('previewSubtitle').innerText = document.getElementById('listSubtitleInput').value;
+            document.getElementById('previewDocId').innerText = document.getElementById('docIdInput').value || 'OHNE-ID';
+            document.getElementById('previewWatermark').innerText = document.getElementById('watermarkInput').value || 'cr4xx0';
+            document.getElementById('previewPageText').innerText = document.getElementById('pageTextInput').value || '';
+        }
+
+        function addNewColumn() {
+            const newId = 'col_' + Date.now();
+            columnsConfig.push({ id: newId, active: true, name: "Neue Spalte" });
+            rowsData.forEach(row => { row[newId] = ""; });
+            renderAll();
+        }
+
+        function removeColumn(index) { columnsConfig.splice(index, 1); renderAll(); }
+        function updateColumnProps(index, field, value) { columnsConfig[index][field] = value; renderPreviewTable(); }
+        function updateQRColumnProps(field, value) { qrColumnConfig[field] = value; renderPreviewTable(); }
+        function addNewRow() {
+            let newRow = { _showQR: false, _qrData: "" };
+            columnsConfig.forEach(col => { newRow[col.id] = ""; });
+            rowsData.push(newRow);
+            renderAll();
+        }
+        function removeRow(idx) { rowsData.splice(idx, 1); renderAll(); }
+        function updateCellValue(rIdx, fieldKey, value) { rowsData[rIdx][fieldKey] = value; renderPreviewTable(); }
+        function updateRowMeta(rIdx, metaKey, value) { rowsData[rIdx][metaKey] = value; renderAll(); }
+
+        function renderColumnConfig() {
+            const container = document.getElementById('columnConfigContainer');
+            let html = `<label style="font-size:0.7rem; color:var(--md-sys-color-on-surface-variant);">SPALTEN EIN- / AUSBLENDEN</label>`;
+            columnsConfig.forEach((col, idx) => {
+                html += `<div class="column-config-row">
+                    <input type="checkbox" ${col.active ? 'checked' : ''} onchange="updateColumnProps(${idx}, 'active', this.checked)" style="width:1.1rem; height:1.1rem; cursor:pointer;">
+                    <input type="text" value="${col.name}" oninput="updateColumnProps(${idx}, 'name', this.value)">
+                    ${columnsConfig.length > 1 ? `<button class="btn-icon" onclick="removeColumn(${idx})"><span class="material-symbols-outlined" style="font-size:1.1rem;">close</span></button>` : ''}
+                </div>`;
+            });
+            html += `<div class="column-config-row" style="border-top: 1px dashed var(--md-sys-color-outline-variant); padding-top: 0.5rem; margin-top: 0.2rem;">
+                <input type="checkbox" ${qrColumnConfig.active ? 'checked' : ''} onchange="updateQRColumnProps('active', this.checked)" style="width:1.1rem; height:1.1rem; cursor:pointer;">
+                <input type="text" value="${qrColumnConfig.name}" oninput="updateQRColumnProps('name', this.value)">
+                <span style="font-size:0.7rem; color:var(--md-sys-color-on-surface-variant); white-space:nowrap;">QR-Spalte</span>
+            </div>`;
+            container.innerHTML = html;
+        }
+
+        function renderEditorRows() {
+            const container = document.getElementById('editorRowsContainer');
+            container.innerHTML = '';
+            rowsData.forEach((row, rIdx) => {
+                const rowDiv = document.createElement('div');
+                rowDiv.className = 'editor-row';
+                let fieldsHTML = '';
+                columnsConfig.forEach(col => {
+                    if (col.active) {
+                        fieldsHTML += `<div class="form-group"><label style="font-size:0.65rem;">${col.name}</label>
+                        <input type="text" value="${row[col.id] || ''}" oninput="updateCellValue(${rIdx}, '${col.id}', this.value)"></div>`;
+                    }
+                });
+                rowDiv.innerHTML = `<div class="editor-row-header"><span>Zeile #${rIdx + 1}</span>
+                <button class="btn-icon" onclick="removeRow(${rIdx})"><span class="material-symbols-outlined">delete</span></button></div>
+                ${fieldsHTML}
+                <div class="qr-toggle-section">
+                    <label class="checkbox-label"><input type="checkbox" ${row._showQR ? 'checked' : ''} onchange="updateRowMeta(${rIdx}, '_showQR', this.checked)"> QR Code generieren</label>
+                    <input type="text" style="margin-top: 0.5rem; display: ${row._showQR ? 'block' : 'none'};" placeholder="Link eingeben..." value="${row._qrData || ''}" oninput="updateRowMeta(${rIdx}, '_qrData', this.value)">
+                </div>`;
+                container.appendChild(rowDiv);
+            });
+        }
+
+        function renderPreviewTable() {
+            const headerTr = document.getElementById('previewTableHeader');
+            const bodyTbody = document.getElementById('previewTableBody');
+            headerTr.innerHTML = ''; bodyTbody.innerHTML = '';
+            const activeCols = columnsConfig.filter(c => c.active);
+            const showQRCol = qrColumnConfig.active && rowsData.some(row => row._showQR === true);
+
+            let headHTML = '';
+            activeCols.forEach(col => { headHTML += `<th>${col.name}</th>`; });
+            if (showQRCol) { headHTML += `<th>${qrColumnConfig.name}</th>`; }
+            headerTr.innerHTML = headHTML;
+
+            rowsData.forEach((row, rIdx) => {
+                let rowHTML = '';
+                activeCols.forEach(col => { rowHTML += `<td>${row[col.id] || ''}</td>`; });
+                if (showQRCol) {
+                    if (row._showQR && row._qrData && row._qrData.trim() !== "") {
+                        rowHTML += `<td><div class="qr-cell-wrapper"><div class="qr-canvas-holder qr-cell-target"></div></div></td>`;
+                    } else {
+                        rowHTML += `<td><span style="color:#71717a;">-</span></td>`;
+                    }
+                }
+                const tr = document.createElement('tr');
+                tr.innerHTML = rowHTML;
+                bodyTbody.appendChild(tr);
+            });
+
+            if (showQRCol) {
+                const rows = bodyTbody.querySelectorAll('tr');
+                rowsData.forEach((row, idx) => {
+                    if (row._showQR && row._qrData && row._qrData.trim() !== "") {
+                        const target = rows[idx].querySelector('.qr-cell-target');
+                        if (target) {
+                            target.innerHTML = '';
+                            new QRCode(target, { text: row._qrData, width: 56, height: 56, colorDark: "#000000", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.M });
+                        }
+                    }
+                });
+            }
+        }
+
+        function exportToPDF() {
+            const sheet = document.getElementById('previewSheet');
+            const docId = document.getElementById('docIdInput').value || 'Export';
+            const opt = {
+                margin: 0,
+                filename: `${docId}.pdf`,
+                image: { type: 'jpeg', quality: 1.0 },
+                html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff', scrollX: 0, scrollY: 0 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).from(sheet).save();
+        }
+
+        function renderAll() { updateMeta(); renderColumnConfig(); renderEditorRows(); renderPreviewTable(); }
+        renderAll();
+    </script>
+</body>
+</html>
